@@ -6,11 +6,12 @@
 
 <div th:replace="fragments :: page-header"></div>
 
+
 <div class="container body-content">
 
     <h1 th:text="${#strings.capitalizeWords(title)}"></h1>
 
-    <form th:action="@{/search/results}">
+    <form th:action="@{/search/returns}" method="post">
         <h2>Search by:</h2>
 
         <p>
@@ -32,13 +33,31 @@
         </p>
 
         <input type="submit" value="Search" />
+
+
     </form>
 
     <hr />
 
     <!-- TODO #2 - Loop over jobs map to display all job fields -->
 
-</div>
+    <div th:if="${jobs} and ${jobs.size()}">
+    <h1 th:text="${#strings.capitalizeWords(secondTitle)}"></h1>
 
+            <table class= "job-listing" th:each="job,idx : ${jobs}">
+                <tr th:each="i:${job}">
+                    <th th:text="${i.key}"></th>
+                    <td th:text="${i.value}"></td>
+            </tr>
+        </table>
+    </div>
+    <div th:unless = "${jobs==null}">
+        <p>No search Results</p>
+
+    </div>
+
+
+
+</div>
 </body>
 </html>
